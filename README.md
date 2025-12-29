@@ -1,48 +1,121 @@
-# Home Assistant Modbus Electricity Meter Integration
+# Home Assistant Modbus Electricity Meter Integrations
 
 Ett anpassat Home Assistant-plugin för att läsa elmätare via Modbus TCP/IP.
 
 A custom Home Assistant integration for reading electricity meters via Modbus TCP/IP.
 
+## Integrationer / Integrations
+
+Detta repository innehåller två integrationer:
+
+This repository contains two integrations:
+
+### 1. Modbus Electricity Meter (`modbus_meter`)
+Generisk Modbus-integration med konfiguration via `configuration.yaml`. Stödjer alla typer av elmätare med flexibel registerkonfiguration.
+
+Generic Modbus integration configured via `configuration.yaml`. Supports all types of electricity meters with flexible register configuration.
+
+### 2. Siemens Electricity Meter (`siemens_meter`)
+Dedikerad integration för Siemens elmätare med UI-baserad konfiguration (config flow). Enkel installation direkt via Home Assistant gränssnittet.
+
+Dedicated integration for Siemens electricity meters with UI-based configuration (config flow). Easy installation directly through Home Assistant interface.
+
 ## Funktioner / Features
 
+### Modbus Electricity Meter
 - Läser data från elmätare via Modbus TCP
 - Stödjer både holding och input registers
 - Konfigurerbar skanningsintervall
 - Stöd för olika datatyper (16-bit, 32-bit float, 64-bit float)
 - Stöd för skalfaktorer
 - Automatisk enhets- och device class-mappning
+- Konfiguration via `configuration.yaml`
+
+### Siemens Electricity Meter
+- UI-baserad konfiguration (config flow)
+- Förkonfigurerade register för Siemens elmätare
+- Energi (FC3 4131) och Effekt (FC3 4157)
+- Automatisk enhetsmappning
+- Enkel installation via Home Assistant UI
 
 ---
 
+### Modbus Electricity Meter
 - Reads data from electricity meters via Modbus TCP
 - Supports both holding and input registers
 - Configurable scan interval
 - Support for different data types (16-bit, 32-bit float, 64-bit float)
 - Support for scale factors
 - Automatic unit and device class mapping
+- Configuration via `configuration.yaml`
+
+### Siemens Electricity Meter
+- UI-based configuration (config flow)
+- Pre-configured registers for Siemens meters
+- Energy (FC3 4131) and Power (FC3 4157)
+- Automatic unit mapping
+- Easy installation via Home Assistant UI
 
 ## Installation
 
 ### HACS (Rekommenderat / Recommended)
 
 1. Lägg till detta repository som en custom repository i HACS
-2. Sök efter "Modbus Electricity Meter" och installera
+2. Sök efter "Modbus Electricity Meter" eller "Siemens Electricity Meter" och installera
 3. Starta om Home Assistant
 
 ### Manuell Installation / Manual Installation
 
+#### För Modbus Electricity Meter
 1. Kopiera mappen `custom_components/modbus_meter` till din Home Assistant `custom_components` katalog
 2. Starta om Home Assistant
 
 ```bash
 cd /config
 mkdir -p custom_components
-cd custom_components
-git clone https://github.com/yourusername/modbus_meter.git modbus_meter
+cp -r custom_components/modbus_meter /config/custom_components/
+```
+
+#### För Siemens Electricity Meter
+1. Kopiera mappen `custom_components/siemens_meter` till din Home Assistant `custom_components` katalog
+2. Starta om Home Assistant
+
+```bash
+cd /config
+mkdir -p custom_components
+cp -r custom_components/siemens_meter /config/custom_components/
 ```
 
 ## Konfiguration / Configuration
+
+---
+
+## 🔧 Siemens Electricity Meter - Config Flow Setup
+
+Siemens-integrationen konfigureras enkelt via Home Assistant UI:
+
+The Siemens integration is easily configured via Home Assistant UI:
+
+### Installation / Setup
+
+1. Gå till **Inställningar** → **Enheter & tjänster** → **Lägg till integration**
+2. Sök efter "**Siemens Electricity Meter**"
+3. Fyll i följande information:
+   - **Namn**: Ett valfritt namn för din elmätare (t.ex. "Siemens Huvudmätare")
+   - **IP-adress**: IP-adressen till din Siemens elmätare
+   - **Port**: Modbus TCP port (standard: 502)
+   - **Slave ID**: Modbus slave ID (standard: 1)
+   - **Uppdateringsintervall**: Hur ofta data ska hämtas i sekunder (standard: 30)
+
+4. Klicka på **Skicka**
+
+The integration will automatically create two sensors:
+- **Energy** (kWh) - Reading from holding register 4131
+- **Power** (W) - Reading from holding register 4157
+
+---
+
+## 📝 Modbus Electricity Meter - YAML Configuration
 
 Lägg till följande i din `configuration.yaml`:
 
@@ -205,6 +278,38 @@ Stödda device classes / Supported device classes:
 
 ## Vanliga elmätare / Common Electricity Meters
 
+### Siemens Electricity Meters
+
+För Siemens elmätare, använd den dedikerade `siemens_meter` integrationen med config flow (se ovan).
+
+For Siemens electricity meters, use the dedicated `siemens_meter` integration with config flow (see above).
+
+Om du vill använda den generiska `modbus_meter` integrationen istället:
+
+If you want to use the generic `modbus_meter` integration instead:
+
+```yaml
+modbus_meter:
+  - name: "Siemens Meter"
+    host: 192.168.1.100
+    port: 502
+    slave_id: 1
+    scan_interval: 30
+    registers:
+      - name: "Energy"
+        address: 4131
+        type: holding
+        count: 2
+        device_class: energy
+        unit: "kWh"
+      - name: "Power"
+        address: 4157
+        type: holding
+        count: 2
+        device_class: power
+        unit: "W"
+```
+
 ### Eastron SDM630
 
 En populär 3-fas elmätare med Modbus-support.
@@ -288,6 +393,7 @@ logger:
   default: info
   logs:
     custom_components.modbus_meter: debug
+    custom_components.siemens_meter: debug
     pymodbus: debug
 ```
 
