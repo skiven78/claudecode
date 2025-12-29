@@ -1,0 +1,24 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Siemens Electricity Meter",
+        "description": "Konfigurera anslutning till Siemens elmätare",
+        "data": {
+          "name": "Namn",
+          "host": "IP-adress",
+          "port": "Port",
+          "slave_id": "Slave ID",
+          "scan_interval": "Uppdateringsintervall (sekunder)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kan inte ansluta till mätaren. Kontrollera IP-adress och port.",
+      "unknown": "Ett oväntat fel uppstod"
+    },
+    "abort": {
+      "already_configured": "Enheten är redan konfigurerad"
+    }
+  }
+}
