@@ -1,0 +1,126 @@
+# Exempel på konfiguration för Modbus Electricity Meter
+# Example configuration for Modbus Electricity Meter
+
+modbus_meter:
+  # Grundläggande konfiguration / Basic configuration
+  - name: "My Electricity Meter"
+    host: 192.168.1.100
+    port: 502
+    slave_id: 1
+    scan_interval: 30
+    registers:
+      # Totalenergi / Total energy
+      - name: "Total Energy"
+        address: 0
+        type: input
+        count: 2
+        scale: 0.01
+        unit: "kWh"
+        device_class: energy
+
+      # Aktuell effekt / Current power
+      - name: "Current Power"
+        address: 12
+        type: input
+        count: 2
+        scale: 1.0
+        unit: "W"
+        device_class: power
+
+      # Spänning fas 1 / Voltage phase 1
+      - name: "Voltage L1"
+        address: 20
+        type: input
+        count: 2
+        scale: 0.1
+        unit: "V"
+        device_class: voltage
+
+      # Ström fas 1 / Current phase 1
+      - name: "Current L1"
+        address: 30
+        type: input
+        count: 2
+        scale: 0.01
+        unit: "A"
+        device_class: current
+
+      # Frekvens / Frequency
+      - name: "Frequency"
+        address: 40
+        type: input
+        count: 2
+        scale: 0.01
+        unit: "Hz"
+        device_class: frequency
+
+  # Eastron SDM630 (3-fas elmätare / 3-phase meter)
+  - name: "Eastron SDM630"
+    host: 192.168.1.101
+    port: 502
+    slave_id: 1
+    scan_interval: 10
+    registers:
+      # Fas 1
+      - name: "Voltage L1-N"
+        address: 0
+        count: 2
+        device_class: voltage
+
+      - name: "Current L1"
+        address: 6
+        count: 2
+        device_class: current
+
+      - name: "Power L1"
+        address: 12
+        count: 2
+        device_class: power
+
+      # Fas 2
+      - name: "Voltage L2-N"
+        address: 2
+        count: 2
+        device_class: voltage
+
+      - name: "Current L2"
+        address: 8
+        count: 2
+        device_class: current
+
+      - name: "Power L2"
+        address: 14
+        count: 2
+        device_class: power
+
+      # Fas 3
+      - name: "Voltage L3-N"
+        address: 4
+        count: 2
+        device_class: voltage
+
+      - name: "Current L3"
+        address: 10
+        count: 2
+        device_class: current
+
+      - name: "Power L3"
+        address: 16
+        count: 2
+        device_class: power
+
+      # Totaler
+      - name: "Total System Power"
+        address: 52
+        count: 2
+        device_class: power
+
+      - name: "Total Active Energy"
+        address: 342
+        count: 2
+        device_class: energy
+
+      - name: "Frequency"
+        address: 70
+        count: 2
+        device_class: frequency
