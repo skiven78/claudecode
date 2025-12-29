@@ -1,5 +1,7 @@
 {
-  "name": "Modbus Electricity Meter Integrations",
+  "name": "Siemens Electricity Meter",
+  "content_in_root": false,
+  "filename": "siemens_meter",
   "render_readme": true,
   "homeassistant": "2023.1.0"
 }

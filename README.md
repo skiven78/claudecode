@@ -58,11 +58,47 @@ Dedicated integration for Siemens electricity meters with UI-based configuration
 
 ## Installation
 
-### HACS (Rekommenderat / Recommended)
+### HACS Installation
 
-1. Lägg till detta repository som en custom repository i HACS
-2. Sök efter "Modbus Electricity Meter" eller "Siemens Electricity Meter" och installera
-3. Starta om Home Assistant
+#### Steg 1: Lägg till Custom Repository
+1. Öppna HACS i Home Assistant
+2. Klicka på **Integrations**
+3. Klicka på menyn (⋮) i övre högra hörnet
+4. Välj **Custom repositories**
+5. Lägg till följande:
+   - **Repository**: `https://github.com/skiven78/claudecode`
+   - **Category**: `Integration`
+6. Klicka **ADD**
+
+#### Steg 2: Installera Siemens Electricity Meter
+1. I HACS, klicka på **+ EXPLORE & DOWNLOAD REPOSITORIES**
+2. Sök efter "**Siemens**" eller "**Siemens Electricity Meter**"
+3. Klicka på integrationen
+4. Klicka **DOWNLOAD**
+5. Starta om Home Assistant
+
+**OBS**: Detta repository innehåller två integrationer. HACS visar Siemens-integrationen. För Modbus Electricity Meter, använd manuell installation nedan.
+
+---
+
+#### Step 1: Add Custom Repository
+1. Open HACS in Home Assistant
+2. Click on **Integrations**
+3. Click the menu (⋮) in the top right corner
+4. Select **Custom repositories**
+5. Add the following:
+   - **Repository**: `https://github.com/skiven78/claudecode`
+   - **Category**: `Integration`
+6. Click **ADD**
+
+#### Step 2: Install Siemens Electricity Meter
+1. In HACS, click **+ EXPLORE & DOWNLOAD REPOSITORIES**
+2. Search for "**Siemens**" or "**Siemens Electricity Meter**"
+3. Click on the integration
+4. Click **DOWNLOAD**
+5. Restart Home Assistant
+
+**NOTE**: This repository contains two integrations. HACS shows the Siemens integration. For Modbus Electricity Meter, use manual installation below.
 
 ### Manuell Installation / Manual Installation
 
@@ -76,7 +112,7 @@ mkdir -p custom_components
 cp -r custom_components/modbus_meter /config/custom_components/
 ```
 
-#### För Siemens Electricity Meter
+#### För Siemens Electricity Meter (om HACS inte fungerar)
 1. Kopiera mappen `custom_components/siemens_meter` till din Home Assistant `custom_components` katalog
 2. Starta om Home Assistant
 
